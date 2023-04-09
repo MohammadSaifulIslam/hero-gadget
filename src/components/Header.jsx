@@ -49,7 +49,7 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
-            <Link to='/cart' aria-label='Cart' title='Cart'>
+            <Link to='cart' aria-label='Cart' title='Cart'>
               <div className='relative py-3'>
                 <ShoppingCartIcon className='h-6 w-6 text-cyan-400' />
               </div>
@@ -132,6 +132,16 @@ const Header = () => {
                 </div>
                 <nav>
                   <ul className='space-y-4'>
+                    <li>
+                      <Link
+                        to='/'
+                        aria-label='Home'
+                        title='Home'
+                        className='font-medium tracking-wide text-gray-700 transition-colors duration-200 hover:text-deep-purple-accent-400'
+                      >
+                        Home
+                      </Link>
+                    </li>
                     <li>
                       <Link
                         to='/shop'

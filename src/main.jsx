@@ -8,30 +8,36 @@ import {
 } from "react-router-dom";
 import Home from './components/Home';
 import About from './components/About';
-import ProductCard from './components/Cards/ProductCard';
 import ErrorPage from './components/ErrorPage';
 import Shop from './components/Shop';
+import Cart from './components/Cart';
+import { getCartData } from './Loader/getCartData';
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App/>,
+        element: <App />,
         errorElement: <ErrorPage></ErrorPage>,
-        children:[
+        children: [
             {
-                path:'/',
+                path: '/',
                 element: <Home></Home>
             },
             {
-                path:'/about',
-                element: <About></About>
-            },
-            {
-                path:'/shop',
+                path: '/shop',
                 element: <Shop></Shop>,
                 loader: () => fetch('products.json')
             },
+            {
+                path: '/about',
+                element: <About></About>
+            },
+            {
+                path: 'cart',
+                element:<Cart></Cart>,
+                loader: getCartData
 
+            }
         ]
     },
 ]);
