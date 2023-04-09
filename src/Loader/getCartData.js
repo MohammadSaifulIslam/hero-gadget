@@ -1,19 +1,19 @@
 import { getDataFromDb } from "../utility/fakeDb"
 
-export const getCartData = async() =>{
+export const getCartAndProductData = async() =>{
     const productData = await fetch('products.json')
     const products = await productData.json()
 
     let storedCart = getDataFromDb();
-    let productArr = [];
+    let cartArr = [];
     for(const id in storedCart){
         const foundProduct = products.find(product => product.id === id);
         if(foundProduct){
             foundProduct.quantity = storedCart[id]
-            productArr.push(foundProduct)
+            cartArr.push(foundProduct)
         }
       
     }
 
-    return productArr
+    return [products ,cartArr]
 }

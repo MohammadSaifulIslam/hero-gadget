@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
 import CartItem from './Cards/CartItem';
 import { clearCart, removeItemFromDb } from '../utility/fakeDb';
+import { CartContext } from '../App';
 
 const Cart = () => {
-    const cart = useLoaderData()
+    const [cart, setCart] = useContext(CartContext || [])
     let total = 0;
     cart.map(product =>
         total += product.price * product.quantity
@@ -13,6 +14,8 @@ const Cart = () => {
         clearCart()
     }
     const handleRemoveItem = id =>{
+        const remainig = cart.filter(product => product.id !== id);
+        setCart(remainig)
         removeItemFromDb(id)
     }
     return (
@@ -20,7 +23,8 @@ const Cart = () => {
             <div>
                 <h3 className='py-5 text-2xl font-semibold text-black'>{cart.length > 0 ? 'Review cart items' : 'Cart is empty'}</h3>
                 <ul className='divide-y divide-gray-700'>
-                    {cart.map(product => <CartItem
+                    {cart.map(product => 
+                    <CartItem
                         key={product.id}
                         product={product}
                         handleRemoveItem={handleRemoveItem}

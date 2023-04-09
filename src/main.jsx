@@ -11,13 +11,14 @@ import About from './components/About';
 import ErrorPage from './components/ErrorPage';
 import Shop from './components/Shop';
 import Cart from './components/Cart';
-import { getCartData } from './Loader/getCartData';
+import { getCartAndProductData } from './Loader/getCartData';
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <App />,
         errorElement: <ErrorPage></ErrorPage>,
+        loader: getCartAndProductData,
         children: [
             {
                 path: '/',
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
             {
                 path: 'cart',
                 element:<Cart></Cart>,
-                loader: getCartData
+                loader: getCartAndProductData
 
             }
         ]
