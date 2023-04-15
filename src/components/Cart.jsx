@@ -3,6 +3,7 @@ import { Link, useLoaderData } from 'react-router-dom';
 import CartItem from './Cards/CartItem';
 import { clearCart, removeItemFromDb } from '../utility/fakeDb';
 import { CartContext } from '../App';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Cart = () => {
     const [cart, setCart] = useContext(CartContext || [])
@@ -11,13 +12,26 @@ const Cart = () => {
         total += product.price * product.quantity
     )
     const handleClearCart = () =>{
+        setCart([])
         clearCart()
+        toast.success('Clear Cart! 😭')
     }
     const handleRemoveItem = id =>{
         const remainig = cart.filter(product => product.id !== id);
         setCart(remainig)
         removeItemFromDb(id)
+        toast.success('Item removed 😢')
     }
+    const handlePlaceOrder =() =>{
+        if(cart.length > 0){
+            setCart([])
+            clearCart()
+            toast.success('Your order has been placed 🔥')
+        }else{
+            toast.success('Add item first')
+        }
+    }
+
     return (
         <div className='py-5 flex justify-center text-gray-900 bg-gray-100 min-h-screen'>
             <div>
@@ -41,7 +55,7 @@ const Cart = () => {
                             <button className='btn-outlined'>Back To Shop</button>
                         </Link>
                     }
-                    <button className='btn-primary'>Place Order</button>
+                    <button onClick={handlePlaceOrder} className='btn-primary'>Place Order</button>
                 </div>
             </div>
         </div>

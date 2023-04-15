@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { useLoaderData } from 'react-router-dom';
 import ProductCard from './Cards/ProductCard';
 import { addToDb } from '../utility/fakeDb';
 import { CartContext, ProductContex } from '../App';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Shop = () => {
     const productData = useContext(ProductContex);
@@ -17,16 +17,13 @@ const Shop = () => {
             newCart = [...cart,product]
             setCart(newCart)
         }else{
-            const rest = cart.filter(existingProduct => existingProduct.id === product.id);
+            const rest = cart.filter(existingProduct => existingProduct.id !== product.id);
             product.quantity += 1;
             newCart = [...rest, product]
             setCart(newCart)
         }
-
-
-
-
        addToDb(product.id)
+       toast.success('Successfully added item! 🙂')
     }
     return (
         <div className='my-container product-container'>
